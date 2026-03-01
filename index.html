@@ -3,81 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | SSGrowth</title>
+    <title>Terminal | SSGrowth</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #ededed; margin: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #ededed; overflow: hidden; }
         .mono { font-family: 'JetBrains Mono', monospace; }
-        .grid-master {
-            display: grid;
-            grid-template-columns: 260px 1fr 300px;
-            grid-template-rows: 60px 1fr;
-            height: 100vh;
-        }
+        .grid-master { display: grid; grid-template-columns: 260px 1fr 300px; grid-template-rows: 60px 1fr; height: 100vh; }
         .panel-border { border: 1px solid rgba(255, 255, 255, 0.05); }
-        .sidebar { background: #0a0a0a; }
     </style>
 </head>
 <body>
-
-<div class="grid-master">
-    <header class="col-span-3 panel-border flex items-center justify-between px-6 bg-[#0a0a0a] z-50">
-        <div class="flex items-center gap-10">
-            <span class="font-bold text-lg tracking-tighter">SSGROWTH</span>
-            <nav class="flex gap-6 text-xs font-medium text-gray-500">
-                <a href="/" class="text-white">Terminal</a>
-                <a href="/docs" class="hover:text-white">Documentation</a>
-            </nav>
-        </div>
-        <div class="flex gap-4">
-            <a href="/login" class="text-xs font-bold text-gray-400 py-2">Log in</a>
-            <a href="/signup" class="bg-blue-600 text-white text-xs font-bold px-4 py-2 rounded">Get Started</a>
-        </div>
-    </header>
-
-    <aside class="sidebar panel-border border-t-0 p-6">
-        <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-6">Documentation</h3>
-        <ul class="space-y-4 text-sm text-gray-400">
-            <li class="flex items-center gap-3 text-white"><i data-lucide="layers" class="w-4 h-4"></i> Overview</li>
-            <li class="flex items-center gap-3 hover:text-white cursor-pointer"><i data-lucide="file-text" class="w-4 h-4"></i> Market Data API</li>
-            <li class="flex items-center gap-3 hover:text-white cursor-pointer"><i data-lucide="terminal" class="w-4 h-4"></i> Webhooks</li>
-        </ul>
-    </aside>
-
-    <main class="p-8 overflow-y-auto">
-        <div class="flex justify-between items-end mb-8">
-            <h1 class="text-3xl font-light">Global Markets</h1>
-            <div class="text-xs text-emerald-500 flex items-center gap-2">
-                <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span> Live Data Feed
+    <div class="grid-master">
+        <header class="col-span-3 panel-border flex items-center justify-between px-6 bg-[#0a0a0a] z-50">
+            <div class="flex items-center gap-10">
+                <span class="font-bold text-lg tracking-tighter">SSGROWTH</span>
+                <nav class="flex gap-6 text-xs font-medium text-gray-500">
+                    <a href="/" class="text-white">Terminal</a>
+                    <a href="#" class="hover:text-white transition-colors">Documentation</a>
+                </nav>
             </div>
-        </div>
-        
-        <div class="grid grid-cols-1 gap-6">
+            <div class="flex gap-4 items-center">
+                <a href="/login/" class="text-xs font-bold text-gray-400 hover:text-white">Log in</a>
+                <a href="/signup/" class="bg-white text-black text-xs font-bold px-4 py-2 rounded hover:bg-gray-200 transition-all">Open Account</a>
+            </div>
+        </header>
+
+        <aside class="panel-border border-t-0 p-6 bg-[#080808]">
+            <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-6">Library</h3>
+            <ul class="space-y-4 text-sm text-gray-400">
+                <li class="flex items-center gap-3 text-blue-500"><i data-lucide="book" class="w-4 h-4"></i> Getting Started</li>
+                <li class="flex items-center gap-3 hover:text-white cursor-pointer"><i data-lucide="code" class="w-4 h-4"></i> API Keys</li>
+            </ul>
+        </aside>
+
+        <main class="p-8 overflow-y-auto">
+            <h1 class="text-2xl font-light mb-8">Institutional Overview</h1>
             <div class="bg-[#0d0d0d] p-8 rounded-xl border border-white/5">
-                <div class="text-xs text-gray-500 uppercase mb-2">Growth Index (GIX)</div>
+                <div class="text-[10px] text-gray-500 uppercase mb-2">Growth Index (GIX)</div>
                 <div class="text-5xl mono tracking-tighter">14,209.55 <span class="text-xl text-emerald-500 font-normal">+1.8%</span></div>
                 <div class="mt-8 h-32 w-full bg-blue-600/5 rounded border-b-2 border-blue-600/40"></div>
             </div>
-        </div>
-    </main>
+        </main>
 
-    <aside class="sidebar panel-border border-t-0 p-6">
-        <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-6">Watchlist</h3>
-        <div class="space-y-4">
-            <div class="flex justify-between items-center">
-                <span class="text-sm font-medium">BTC/USD</span>
-                <span class="mono text-sm text-white">64,201.00</span>
+        <aside class="panel-border border-t-0 p-6 bg-[#080808]">
+            <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-6">Watchlist</h3>
+            <div class="space-y-4">
+                <div class="flex justify-between items-center"><span class="text-sm">NVDA</span><span class="mono text-sm text-emerald-500">822.40</span></div>
             </div>
-            <div class="flex justify-between items-center">
-                <span class="text-sm font-medium">ETH/USD</span>
-                <span class="mono text-sm text-white">3,450.12</span>
-            </div>
-        </div>
-    </aside>
-</div>
-
-<script>lucide.createIcons();</script>
+        </aside>
+    </div>
+    <script>lucide.createIcons();</script>
 </body>
 </html>
