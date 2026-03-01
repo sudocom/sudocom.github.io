@@ -29,34 +29,37 @@
         </form>
     </div>
 
-    <script>
-        const SB_URL = "https://vzywmrrusdsanjczohej.supabase.co";
-        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6eXdtcnJ1c2RzYW5qY3pvaGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzNDk1ODgsImV4cCI6MjA4NzkyNTU4OH0.JBHuJXWv_0sOrbmWbp5Nh4ryaNOeVODbW62nPuvgnaE";
-        const supabase = supabase.createClient(SB_URL, SB_KEY);
+   <script>
+    const SB_URL = "https://vzywmrrusdsanjczohej.supabase.co";
+    const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6eXdtcnJ1c2RzYW5qY3pvaGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzNDk1ODgsImV4cCI6MjA4NzkyNTU4OH0.JBHuJXWv_0sOrbmWbp5Nh4ryaNOeVODbW62nPuvgnaE";
+    const supabase = supabase.createClient(SB_URL, SB_KEY);
 
-        document.getElementById('signup-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const btn = document.getElementById('submit-btn');
-            
-            btn.innerText = "Registering...";
-            const { error } = await supabase.auth.signUp({ 
-                email, 
-                password,
-                options: {
-                    data: { first_name: document.getElementById('fname').value }
-                }
-            });
+    document.getElementById('signup-form').addEventListener('submit', async (e) => {
+        e.preventDefault(); // This stops the /? from happening
+        e.stopPropagation();
 
-            if (error) {
-                alert(error.message);
-                btn.innerText = "Create Account";
-            } else {
-                // REDIRECT TO LOGIN WITH QUERY PARAM
-                window.location.href = "/login/?verify=true";
-            }
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const btn = document.getElementById('submit-btn');
+        
+        btn.innerText = "Processing...";
+        btn.disabled = true;
+
+        const { data, error } = await supabase.auth.signUp({ 
+            email, 
+            password 
         });
-    </script>
+
+        if (error) {
+            alert("Error: " + error.message);
+            btn.innerText = "Create Account";
+            btn.disabled = false;
+        } else {
+            // FORCE REDIRECT TO LOGIN FOLDER WITH PARAMETER
+            const loginUrl = window.location.origin + "/login/index.html?verify=true";
+            window.location.replace(loginUrl);
+        }
+    });
+</script>
 </body>
 </html>
