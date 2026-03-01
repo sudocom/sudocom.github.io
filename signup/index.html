@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | SSGrowth</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #050505; color: #e5e5e5; }
+        .input-field { background: #141414; border: 1px solid rgba(255, 255, 255, 0.1); transition: all 0.2s; }
+        .input-field:focus { border-color: #3b82f6; outline: none; }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-md p-8">
+        <div class="mb-10">
+            <h2 class="text-2xl font-bold tracking-tight text-white">Create SSGrowth Account</h2>
+            <p class="text-sm text-gray-500 mt-1">Join the institutional growth network.</p>
+        </div>
+
+        <form class="space-y-4">
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase mb-1 block">First Name</label>
+                    <input type="text" class="input-field w-full p-3 rounded text-sm text-white" required>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-gray-500 uppercase mb-1 block">Last Name</label>
+                    <input type="text" class="input-field w-full p-3 rounded text-sm text-white" required>
+                </div>
+            </div>
+            <div>
+                <label class="text-[10px] font-bold text-gray-500 uppercase mb-1 block">Corporate Email</label>
+                <input type="email" class="input-field w-full p-3 rounded text-sm text-white" required>
+            </div>
+            <div>
+                <label class="text-[10px] font-bold text-gray-500 uppercase mb-1 block">Security Password</label>
+                <input type="password" class="input-field w-full p-3 rounded text-sm text-white" placeholder="Minimum 12 characters" required>
+            </div>
+            
+            <div class="flex items-start gap-3 py-2">
+                <input type="checkbox" class="mt-1 accent-blue-600" id="terms" required>
+                <label for="terms" class="text-[11px] text-gray-500 leading-normal">I agree to the Institutional Data Access Agreement and Privacy Policy.</label>
+            </div>
+
+            <button type="submit" class="w-full bg-white text-black font-bold py-3 rounded text-sm hover:bg-gray-200 transition-all">Create Account</button>
+        </form>
+
+        <p class="text-center text-xs text-gray-500 mt-8">
+            Already registered? <a href="/login" class="text-blue-500 hover:underline">Log in to Terminal</a>
+        </p>
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>
