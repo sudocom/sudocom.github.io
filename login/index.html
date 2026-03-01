@@ -45,41 +45,39 @@
         </div>
     </div>
 
-    <script>
-        const SB_URL = "https://vzywmrrusdsanjczohej.supabase.co";
-        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6eXdtcnJ1c2RzYW5qY3pvaGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzNDk1ODgsImV4cCI6MjA4NzkyNTU4OH0.JBHuJXWv_0sOrbmWbp5Nh4ryaNOeVODbW62nPuvgnaE";
-        const supabase = supabase.createClient(SB_URL, SB_KEY);
+   <script>
+    const SB_URL = "https://vzywmrrusdsanjczohej.supabase.co";
+    const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6eXdtcnJ1c2RzYW5qY3pvaGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzNDk1ODgsImV4cCI6MjA4NzkyNTU4OH0.JBHuJXWv_0sOrbmWbp5Nh4ryaNOeVODbW62nPuvgnaE";
+    const supabase = supabase.createClient(SB_URL, SB_KEY);
 
-        function showToast(msg, icon = "ℹ️") {
-            const toast = document.getElementById('toast');
-            document.getElementById('toast-message').innerText = msg;
-            document.getElementById('toast-icon').innerText = icon;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 5000);
+    // TOAST LOGIC
+    function showToast(msg) {
+        const toast = document.getElementById('toast');
+        document.getElementById('toast-message').innerText = msg;
+        toast.classList.add('show');
+        setTimeout(() => { toast.classList.remove('show'); }, 6000);
+    }
+
+    // CHECK URL FOR VERIFY PARAMETER IMMEDIATELY
+    window.onload = () => {
+        if (window.location.search.includes('verify=true')) {
+            showToast("Success! Please check your inbox for a confirmation email.");
         }
+    };
 
-        // Check if redirected from Signup
-        const params = new URLSearchParams(window.location.search);
-        if (params.get('verify') === 'true') {
-            showToast("Success! Check your inbox for confirmation email.", "📧");
+    document.getElementById('login-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+
+        if (error) {
+            showToast("Authentication Failed: " + error.message);
+        } else {
+            window.location.replace(window.location.origin + "/index.html");
         }
-
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const btn = document.getElementById('submit-btn');
-            
-            btn.innerText = "Verifying...";
-            const { error } = await supabase.auth.signInWithPassword({ email, password });
-
-            if (error) {
-                showToast(error.message, "❌");
-                btn.innerText = "Authenticate";
-            } else {
-                window.location.href = "/";
-            }
-        });
-    </script>
+    });
+</script>
 </body>
 </html>
