@@ -5,46 +5,58 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up | SSGrowth</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
         body { font-family: 'Inter', sans-serif; background-color: #050505; color: #e5e5e5; }
-        .input-box { background: #111; border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.2s; }
+        .input-box { background: #111; border: 1px solid rgba(255, 255, 255, 0.08); transition: all 0.2s; color: white; }
         .input-box:focus { border-color: #3b82f6; outline: none; }
     </style>
 </head>
 <body class="flex items-center justify-center h-screen">
     <div class="w-full max-w-md p-10 bg-[#0d0d0d] border border-white/5 rounded-2xl shadow-2xl">
-        <div class="mb-8">
-            <h2 class="text-2xl font-bold tracking-tight">Register for SSGrowth</h2>
-            <p class="text-xs text-gray-500 mt-2">Create your professional profile to start tracking.</p>
-        </div>
+        <h2 class="text-2xl font-bold tracking-tight mb-2">Register for SSGrowth</h2>
+        <p class="text-xs text-gray-500 mb-8">Create your institutional profile.</p>
         
-        <form class="space-y-4">
+        <form id="signup-form" class="space-y-4">
             <div class="grid grid-cols-2 gap-4">
-                <div>
-                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1 tracking-widest">First Name</label>
-                    <input type="text" class="input-box w-full p-3 rounded-lg text-sm text-white" required>
-                </div>
-                <div>
-                    <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1 tracking-widest">Last Name</label>
-                    <input type="text" class="input-box w-full p-3 rounded-lg text-sm text-white" required>
-                </div>
+                <input type="text" id="fname" placeholder="First Name" class="input-box p-3 rounded-lg text-sm" required>
+                <input type="text" id="lname" placeholder="Last Name" class="input-box p-3 rounded-lg text-sm" required>
             </div>
-            <div>
-                <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1 tracking-widest">Email Address</label>
-                <input type="email" class="input-box w-full p-3 rounded-lg text-sm text-white" required>
-            </div>
-            <div>
-                <label class="text-[10px] font-bold text-gray-500 uppercase block mb-1 tracking-widest">Password</label>
-                <input type="password" class="input-box w-full p-3 rounded-lg text-sm text-white" required>
-            </div>
-            <button type="submit" class="w-full bg-white text-black font-bold py-3 rounded-lg text-sm hover:bg-gray-200 transition-all">Create Account</button>
+            <input type="email" id="email" placeholder="Work Email" class="input-box w-full p-3 rounded-lg text-sm" required>
+            <input type="password" id="password" placeholder="Password" class="input-box w-full p-3 rounded-lg text-sm" required>
+            <button type="submit" id="submit-btn" class="w-full bg-white text-black font-bold py-3 rounded-lg text-sm hover:bg-gray-200">Create Account</button>
         </form>
-
-        <div class="mt-8 text-center">
-            <p class="text-xs text-gray-500">Already a member? <a href="/login/" class="text-blue-500 hover:underline">Log in</a></p>
-            <a href="/" class="text-[10px] text-gray-600 block mt-4 hover:text-white transition-colors">← Back to Terminal</a>
-        </div>
     </div>
+
+    <script>
+        const SB_URL = "https://vzywmrrusdsanjczohej.supabase.co";
+        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6eXdtcnJ1c2RzYW5qY3pvaGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzNDk1ODgsImV4cCI6MjA4NzkyNTU4OH0.JBHuJXWv_0sOrbmWbp5Nh4ryaNOeVODbW62nPuvgnaE";
+        const supabase = supabase.createClient(SB_URL, SB_KEY);
+
+        document.getElementById('signup-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const btn = document.getElementById('submit-btn');
+            
+            btn.innerText = "Registering...";
+            const { error } = await supabase.auth.signUp({ 
+                email, 
+                password,
+                options: {
+                    data: { first_name: document.getElementById('fname').value }
+                }
+            });
+
+            if (error) {
+                alert(error.message);
+                btn.innerText = "Create Account";
+            } else {
+                // REDIRECT TO LOGIN WITH QUERY PARAM
+                window.location.href = "/login/?verify=true";
+            }
+        });
+    </script>
 </body>
 </html>
