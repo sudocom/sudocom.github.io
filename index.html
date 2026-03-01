@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Terminal | SSGrowth</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono&display=swap');
@@ -24,7 +25,7 @@
                     <a href="#" class="hover:text-white transition-colors">Documentation</a>
                 </nav>
             </div>
-            <div class="flex gap-4 items-center">
+            <div class="flex gap-4 items-center" id="auth-nav">
                 <a href="/login/" class="text-xs font-bold text-gray-400 hover:text-white">Log in</a>
                 <a href="/signup/" class="bg-white text-black text-xs font-bold px-4 py-2 rounded hover:bg-gray-200 transition-all">Open Account</a>
             </div>
@@ -42,18 +43,41 @@
             <h1 class="text-2xl font-light mb-8">Institutional Overview</h1>
             <div class="bg-[#0d0d0d] p-8 rounded-xl border border-white/5">
                 <div class="text-[10px] text-gray-500 uppercase mb-2">Growth Index (GIX)</div>
-                <div class="text-5xl mono tracking-tighter">14,209.55 <span class="text-xl text-emerald-500 font-normal">+1.8%</span></div>
+                <div id="index-price" class="text-5xl mono tracking-tighter">14,209.55 <span class="text-xl text-emerald-500 font-normal">+1.8%</span></div>
                 <div class="mt-8 h-32 w-full bg-blue-600/5 rounded border-b-2 border-blue-600/40"></div>
             </div>
         </main>
 
         <aside class="panel-border border-t-0 p-6 bg-[#080808]">
             <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-6">Watchlist</h3>
-            <div class="space-y-4">
+            <div id="watchlist" class="space-y-4">
                 <div class="flex justify-between items-center"><span class="text-sm">NVDA</span><span class="mono text-sm text-emerald-500">822.40</span></div>
             </div>
         </aside>
     </div>
-    <script>lucide.createIcons();</script>
+
+    <script>
+        const SB_URL = "https://vzywmrrusdsanjczohej.supabase.co";
+        const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZ6eXdtcnJ1c2RzYW5qY3pvaGVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIzNDk1ODgsImV4cCI6MjA4NzkyNTU4OH0.JBHuJXWv_0sOrbmWbp5Nh4ryaNOeVODbW62nPuvgnaE";
+        const supabase = supabase.createClient(SB_URL, SB_KEY);
+
+        async function checkUser() {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                document.getElementById('auth-nav').innerHTML = `
+                    <span class="text-xs text-gray-400">${user.email}</span>
+                    <button onclick="signOut()" class="text-xs font-bold text-red-500">Logout</button>
+                `;
+            }
+        }
+
+        async function signOut() {
+            await supabase.auth.signOut();
+            window.location.reload();
+        }
+
+        lucide.createIcons();
+        checkUser();
+    </script>
 </body>
 </html>
